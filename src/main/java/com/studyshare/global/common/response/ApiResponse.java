@@ -1,7 +1,5 @@
 package com.studyshare.global.common.response;
 
-import com.studyshare.global.exception.ApiError;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
