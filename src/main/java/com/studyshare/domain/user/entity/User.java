@@ -2,6 +2,7 @@ package com.studyshare.domain.user.entity;
 
 import com.studyshare.global.common.entity.BaseEntity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 @Table(name = "users")
 public class User extends BaseEntity {
 
