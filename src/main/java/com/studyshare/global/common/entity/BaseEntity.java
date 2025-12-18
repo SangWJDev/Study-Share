@@ -1,4 +1,4 @@
-package com.studyshare.global.common;
+package com.studyshare.global.common.entity;
 
 import java.time.LocalDateTime;
 
