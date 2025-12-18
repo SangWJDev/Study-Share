@@ -26,15 +26,17 @@ public abstract class Plan extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private boolean visibility = false;
+    private boolean isPublic = false;
 
     @Column(name = "study_group_id", nullable = true)
     private Long studyGroupId;
