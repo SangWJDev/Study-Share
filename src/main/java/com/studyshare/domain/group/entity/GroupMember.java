@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +37,7 @@ public class GroupMember {
     @Column(name = "study_group_id", nullable = false)
     private Long studyGroupId;
 
+    @Enumerated(EnumType.STRING)
     private GroupMemberRole role;
 
     @CreatedDate
