@@ -2,6 +2,7 @@ package com.studyshare.domain.user.entity;
 
 import com.studyshare.global.common.entity.BaseEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,20 +23,23 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, unique = true)
     private String nickname;
 
-    private String bioString;
+    private String bio;
 
     @Builder
-    public User(String email, String password, String nickname, String bioString) {
+    public User(String email, String password, String nickname, String bio) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.bioString = bioString;
+        this.bio = bio;
     }
 
 }
