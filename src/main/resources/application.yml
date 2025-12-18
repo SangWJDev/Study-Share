@@ -1,0 +1,97 @@
+spring:
+  application:
+    name: studyshare
+
+  # 프로파일 설정
+  profiles:
+    active: dev
+
+  # 데이터베이스 설정
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/studyshare?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+
+  # SQL 로깅
+  sql:
+    init:
+      mode: never
+
+# 로깅 설정
+logging:
+  level:
+    root: INFO
+    com.studyshare: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# 서버 설정
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+---
+# 개발 환경
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/studyshare?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+logging:
+  level:
+    com.studyshare: DEBUG
+
+---
+# 운영 환경
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: false
+
+logging:
+  level:
+    com.studyshare: INFO
