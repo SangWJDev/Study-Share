@@ -39,7 +39,7 @@ public class GroupMember {
     private Long studyGroupId;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "role", nullable = false)
     private GroupMemberRole role;
 
     @CreatedDate
