@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.studyshare.domain.user.service.UserService;
+import com.studyshare.global.common.response.ApiResponse;
 import com.studyshare.domain.user.dto.LoginRequest;
 import com.studyshare.domain.user.dto.LoginResponse;
 import com.studyshare.domain.user.dto.SignupRequest;
@@ -24,13 +25,15 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.signup(request));
+    public ResponseEntity<ApiResponse<SignupResponse>> signup(@Valid @RequestBody SignupRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.ok(userService.signup(request)));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        return ResponseEntity.ok().body(userService.login(request));
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok()
+                .body(ApiResponse.ok(userService.login(request)));
     }
 
 }
