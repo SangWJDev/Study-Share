@@ -45,7 +45,7 @@ public class JwtUtil {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
             return true;
         } catch (ExpiredJwtException e) {
-            log.warn("토큰이 만료되었습이다.: {}", e.getMessage());
+            log.warn("토큰이 만료되었습니다.: {}", e.getMessage());
             return false;
         } catch (MalformedJwtException e) {
             log.warn("잘못된 형식입니다.: {}", e.getMessage());
