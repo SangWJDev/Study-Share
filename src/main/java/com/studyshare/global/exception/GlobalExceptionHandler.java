@@ -1,5 +1,6 @@
 package com.studyshare.global.exception;
 
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,13 +15,26 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResponse<Void>> handleBusiness(BusinessException e) {
         var ec = e.getErrorCode();
-        return ResponseEntity.status(ec.httpStatus()).body(ApiResponse.fail(ApiError.of(ec.code(), ec.defaultMessage())));
+        return ResponseEntity.status(ec.httpStatus())
+                .body(ApiResponse.fail(ApiError.of(ec.code(), ec.defaultMessage())));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<Void>> handleValidation(MethodArgumentNotValidException e) {
+        String message = e.getBindingResult()
+                .getFieldError()
+                .getDefaultMessage();
+        ErrorCode errorCode = ApiErrorCode.VALIDATION_FAILED;
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.fail(ApiError.of(errorCode.code(), message)));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleUnknown(Exception e) {
         var ec = ApiErrorCode.INTERNAL_ERROR;
-        return ResponseEntity.status(ec.httpStatus()).body(ApiResponse.fail(ApiError.of(ec.code(), ec.defaultMessage())));
+        return ResponseEntity.status(ec.httpStatus())
+                .body(ApiResponse.fail(ApiError.of(ec.code(), ec.defaultMessage())));
     }
-    
+
 }

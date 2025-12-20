@@ -48,6 +48,12 @@ server:
       enabled: true
       force: true
 
+# JWT 설정
+jwt:
+  secret: ${JWT_SECRET}
+  access-token-validity: 3600000  # 1시간 (밀리초)
+  refresh-token-validity: 604800000  # 7일 (밀리초)
+
 ---
 # 개발 환경
 spring:
