@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
-import org.hibernate.validator.internal.util.logging.LoggerFactory;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

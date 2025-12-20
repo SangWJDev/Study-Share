@@ -11,7 +11,7 @@ public enum ApiErrorCode implements ErrorCode {
     INVALID_REQUEST("COMMON-001", HttpStatus.BAD_REQUEST, "요청이 올바르지 않습니다."),
     VALIDATION_FAILED("COMMON-002", HttpStatus.BAD_REQUEST, "요청 값 검증에 실패했습니다."),
     UNSUPPORTED_MEDIA_TYPE("COMMON-003", HttpStatus.UNSUPPORTED_MEDIA_TYPE, "지원하지 않는 Content-Type 입니다."),
-
+    
     // ===== 인증/인가 =====
     UNAUTHORIZED("AUTH-001", HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),
     FORBIDDEN("AUTH-002", HttpStatus.FORBIDDEN, "권한이 없습니다."),
