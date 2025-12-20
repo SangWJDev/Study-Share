@@ -21,7 +21,7 @@ public class SignupResponse {
 
     private LocalDateTime createdAt;
 
-    public SignupResponse from(User user) {
+    public static SignupResponse from(User user) {
         return SignupResponse.builder().id(user.getId()).email(user.getEmail()).nickname(user.getNickname())
                 .createdAt(user.getCreatedAt()).build();
     }
