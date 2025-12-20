@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +15,10 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
     @Value("${jwt.secret}")
@@ -41,16 +45,16 @@ public class JwtUtil {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
             return true;
         } catch (ExpiredJwtException e) {
-            System.out.println("토큰이 만료되었습니다.");
+            log.warn("토큰이 만료되었습이다.: {}", e.getMessage());
             return false;
         } catch (MalformedJwtException e) {
-            System.out.println("잘못된 형식입니다.");
+            log.warn("잘못된 형식입니다.: {}", e.getMessage());
             return false;
         } catch (SignatureException e) {
-            System.out.println("서명이 일치하지 않습니다.");
+            log.warn("서명이 일치하지 않습니다.: {}", e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("토큰 검증 중 예외 발생: {}", e.getMessage());
             return false;
         }
     }
