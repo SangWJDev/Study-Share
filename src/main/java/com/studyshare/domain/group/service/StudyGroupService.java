@@ -115,7 +115,7 @@ public class StudyGroupService {
         StudyGroup studyGroup = studyGroupRepository.findById(request.getGroupId())
                 .orElseThrow(() -> new GroupException(GroupErrorCode.GROUP_NOT_FOUND));
 
-        if (studyGroup.checkLeader(user.getId())) {
+        if (!studyGroup.checkLeader(user.getId())) {
             throw new GroupException(GroupErrorCode.NOT_GROUP_LEADER);
         } else {
             delegateMember.setRole(GroupMemberRole.MEMBER);

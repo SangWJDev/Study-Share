@@ -35,7 +35,8 @@ public class StudyGroup extends BaseEntity {
     private Long leaderId;
 
     @Builder
-    public StudyGroup(String name, int maxMembers, String inviteCode, Long leaderId) {
+    public StudyGroup(Long id, String name, int maxMembers, String inviteCode, Long leaderId) {
+        this.id = id;
         this.name = name;
         this.maxMembers = maxMembers;
         this.inviteCode = inviteCode;

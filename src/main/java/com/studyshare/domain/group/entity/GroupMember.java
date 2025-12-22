@@ -48,7 +48,8 @@ public class GroupMember {
     private LocalDateTime joinedAt;
 
     @Builder
-    public GroupMember(Long userId, Long studyGroupId, GroupMemberRole role) {
+    public GroupMember(Long id, Long userId, Long studyGroupId, GroupMemberRole role) {
+        this.id = id;
         this.userId = userId;
         this.studyGroupId = studyGroupId;
         this.role = role;
