@@ -1,5 +1,7 @@
 package com.studyshare.global.common.response;
 
+import com.studyshare.global.exception.ErrorCode;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,6 +15,10 @@ public class ApiError {
 
     public static ApiError of(String code, String message) {
         return new ApiError(code, message);
+    }
+
+    public static ApiError of(ErrorCode error){
+        return new ApiError(error.code(), error.defaultMessage());
     }
 
 }

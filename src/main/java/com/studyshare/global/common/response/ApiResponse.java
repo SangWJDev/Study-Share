@@ -21,7 +21,7 @@ public class ApiResponse<T> {
         return new ApiResponse<>(true, null, data);
 
     }
-    
+
     public static ApiResponse<Void> ok() {
 
         return new ApiResponse<Void>(true, null, null);
@@ -29,8 +29,8 @@ public class ApiResponse<T> {
     }
 
     public static ApiResponse<Void> fail(ApiError error) {
-        
+
         return new ApiResponse<Void>(false, error, null);
     }
- 
+    
 }
