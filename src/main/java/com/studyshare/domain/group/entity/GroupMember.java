@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,6 +39,7 @@ public class GroupMember {
     @Column(name = "study_group_id", nullable = false)
     private Long studyGroupId;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private GroupMemberRole role;

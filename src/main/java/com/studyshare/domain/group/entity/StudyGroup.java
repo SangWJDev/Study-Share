@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -30,6 +31,7 @@ public class StudyGroup extends BaseEntity {
 
     private int maxMembers;
 
+    @Setter
     private Long leaderId;
 
     @Builder
@@ -40,5 +42,7 @@ public class StudyGroup extends BaseEntity {
         this.leaderId = leaderId;
     }
 
-    
+    public boolean checkLeader(Long id) {
+        return leaderId == id ? true : false;
+    }
 }
