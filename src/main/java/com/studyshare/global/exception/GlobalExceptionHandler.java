@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.studyshare.global.common.response.ApiError;
 import com.studyshare.global.common.response.ApiResponse;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.*;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
@@ -33,6 +36,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleUnknown(Exception e) {
         var ec = ApiErrorCode.INTERNAL_ERROR;
+        log.error("서버 오류: {}", e.getMessage(), e);
         return ResponseEntity.status(ec.httpStatus())
                 .body(ApiResponse.fail(ApiError.of(ec.code(), ec.defaultMessage())));
     }

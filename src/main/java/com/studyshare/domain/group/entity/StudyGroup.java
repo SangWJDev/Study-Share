@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +28,6 @@ public class StudyGroup extends BaseEntity {
     @Column(name = "invite_code", nullable = false, length = 12)
     private String inviteCode;
 
-    @Size(min = 1, max = 4)
     private int maxMembers;
 
     private Long leaderId;
