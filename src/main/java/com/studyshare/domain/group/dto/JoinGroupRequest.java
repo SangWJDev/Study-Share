@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class JoinGroupRequest {
 
     @NotBlank
-    @Size(min = 0, max = 12)
+    @Size(max = 12)
     private String invitedCode;
 
 }

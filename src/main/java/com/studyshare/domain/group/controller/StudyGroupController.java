@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.studyshare.domain.group.dto.CreateGroupRequest;
 import com.studyshare.domain.group.dto.CreateGroupResponse;
 import com.studyshare.domain.group.dto.DelegateLeaderRequest;
-import com.studyshare.domain.group.dto.ExitGroupRequest;
 import com.studyshare.domain.group.dto.JoinGroupRequest;
 import com.studyshare.domain.group.service.StudyGroupService;
 import com.studyshare.global.common.response.ApiResponse;
@@ -45,22 +44,23 @@ public class StudyGroupController {
         return ResponseEntity.ok().body(ApiResponse.ok());
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{groupId}/exit")
     public ResponseEntity<ApiResponse<Void>> exitGroup(@AuthenticationPrincipal String email,
-            @Valid @RequestBody ExitGroupRequest request) {
-        studyGroupService.exitGroup(request, email);
+        @PathVariable Long groupId
+    ) {
+        studyGroupService.exitGroup(groupId, email);
         return ResponseEntity.ok().body(ApiResponse.ok());
     }
 
-    @PatchMapping("/{delegatedUserId}/leaders")
+    @PatchMapping("/{groupId}/leader/{delegatedUserId}")
     public ResponseEntity<ApiResponse<Void>> delegateLeader(@AuthenticationPrincipal String email,
-            @Valid @RequestBody DelegateLeaderRequest request,
+            @PathVariable Long groupId,
             @PathVariable Long delegatedUserId) {
-        studyGroupService.delegateLeader(request, email, delegatedUserId);
+        studyGroupService.delegateLeader(groupId, email, delegatedUserId);
         return ResponseEntity.ok().body(ApiResponse.ok());
     }
 
-    @DeleteMapping("/{groupId}/groups")
+    @DeleteMapping("/{groupId}")
     public ResponseEntity<ApiResponse<Void>> deleteGroup(@AuthenticationPrincipal String email,
             @PathVariable Long groupId) {
         studyGroupService.deleteGroup(email, groupId);

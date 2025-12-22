@@ -1,10 +1,9 @@
-package com.studyshare.domain.domain.service;
+package com.studyshare.domain.group.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -24,16 +23,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.studyshare.domain.group.dto.CreateGroupRequest;
 import com.studyshare.domain.group.dto.CreateGroupResponse;
 import com.studyshare.domain.group.dto.JoinGroupRequest;
-import com.studyshare.domain.group.dto.ExitGroupRequest;
-import com.studyshare.domain.group.dto.DelegateLeaderRequest;
 import com.studyshare.domain.group.entity.GroupMember;
 import com.studyshare.domain.group.entity.GroupMemberRole;
 import com.studyshare.domain.group.entity.StudyGroup;
-import com.studyshare.domain.group.exception.GroupException;
 import com.studyshare.domain.group.exception.GroupErrorCode;
+import com.studyshare.domain.group.exception.GroupException;
 import com.studyshare.domain.group.repository.GroupMemberRepository;
 import com.studyshare.domain.group.repository.StudyGroupRepository;
-import com.studyshare.domain.group.service.StudyGroupService;
 import com.studyshare.domain.user.entity.User;
 import com.studyshare.domain.user.repository.UserRepository;
 
@@ -257,7 +253,7 @@ public class StudyGroupServiceTest {
     @DisplayName("그룹 탈퇴 성공")
     void exitGroup_Success() {
         // Given
-        ExitGroupRequest request = new ExitGroupRequest(1L);
+        Long groupId = 1L;
         String email = "test2@example.com";
         GroupMember member = GroupMember.builder()
             .id(2L)
@@ -271,7 +267,7 @@ public class StudyGroupServiceTest {
             .thenReturn(Optional.of(member));
 
         // When
-        studyGroupService.exitGroup(request, email);
+        studyGroupService.exitGroup(groupId, email);
 
         // Then
         verify(groupMemberRepository).delete(member);
@@ -281,7 +277,7 @@ public class StudyGroupServiceTest {
     @DisplayName("그룹 탈퇴 실패 - 리더는 탈퇴 불가")
     void exitGroup_Leader_ThrowsException() {
         // Given
-        ExitGroupRequest request = new ExitGroupRequest(1L);
+        Long groupId = 1L;
         String email = "test1@example.com";
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(testUser1));
@@ -289,7 +285,7 @@ public class StudyGroupServiceTest {
             .thenReturn(Optional.of(testGroupMember)); // LEADER role
 
         // When & Then
-        assertThatThrownBy(() -> studyGroupService.exitGroup(request, email))
+        assertThatThrownBy(() -> studyGroupService.exitGroup(groupId, email))
             .isInstanceOf(GroupException.class)
             .hasFieldOrPropertyWithValue("errorCode", GroupErrorCode.CANNOT_LEAVE_AS_LEADER);
     }
@@ -298,7 +294,7 @@ public class StudyGroupServiceTest {
     @DisplayName("그룹 탈퇴 실패 - 그룹 멤버 아님")
     void exitGroup_NotMember_ThrowsException() {
         // Given
-        ExitGroupRequest request = new ExitGroupRequest(1L);
+        Long groupId = 1L;
         String email = "test5@example.com";
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(testUser5));
@@ -306,7 +302,7 @@ public class StudyGroupServiceTest {
             .thenReturn(Optional.empty());
 
         // When & Then
-        assertThatThrownBy(() -> studyGroupService.exitGroup(request, email))
+        assertThatThrownBy(() -> studyGroupService.exitGroup(groupId, email))
             .isInstanceOf(GroupException.class)
             .hasFieldOrPropertyWithValue("errorCode", GroupErrorCode.NOT_GROUP_MEMBER);
     }
@@ -317,7 +313,7 @@ public class StudyGroupServiceTest {
     @DisplayName("리더 위임 성공")
     void delegateLeader_Success() {
         // Given
-        DelegateLeaderRequest request = new DelegateLeaderRequest(1L);
+        Long groupId = 1L;
         String email = "test1@example.com";
         Long delegatedUserId = 2L;
 
@@ -343,7 +339,7 @@ public class StudyGroupServiceTest {
         when(studyGroupRepository.findById(1L)).thenReturn(Optional.of(testGroup));
 
         // When
-        studyGroupService.delegateLeader(request, email, delegatedUserId);
+        studyGroupService.delegateLeader(groupId, email, delegatedUserId);
 
         // Then
         assertThat(currentLeader.getRole()).isEqualTo(GroupMemberRole.MEMBER);
@@ -355,7 +351,7 @@ public class StudyGroupServiceTest {
     @DisplayName("리더 위임 실패 - 리더가 아님")
     void delegateLeader_NotLeader_ThrowsException() {
         // Given
-        DelegateLeaderRequest request = new DelegateLeaderRequest(1L);
+        Long groupId = 1L;
         String email = "test2@example.com";
         Long delegatedUserId = 3L;
 
@@ -382,7 +378,7 @@ public class StudyGroupServiceTest {
         when(studyGroupRepository.findById(1L)).thenReturn(Optional.of(group));
 
         // When & Then
-        assertThatThrownBy(() -> studyGroupService.delegateLeader(request, email, delegatedUserId))
+        assertThatThrownBy(() -> studyGroupService.delegateLeader(groupId, email, delegatedUserId))
             .isInstanceOf(GroupException.class)
             .hasFieldOrPropertyWithValue("errorCode", GroupErrorCode.NOT_GROUP_LEADER);
     }

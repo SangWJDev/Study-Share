@@ -44,6 +44,6 @@ public class StudyGroup extends BaseEntity {
     }
 
     public boolean checkLeader(Long id) {
-        return leaderId == id ? true : false;
+        return leaderId.equals(id);
     }
 }
