@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.studyshare.domain.group.dto.CreateGroupRequest;
 import com.studyshare.domain.group.dto.CreateGroupResponse;
+import com.studyshare.domain.group.dto.JoinGroupRequest;
 import com.studyshare.domain.group.service.StudyGroupService;
 import com.studyshare.global.common.response.ApiResponse;
 
@@ -30,4 +31,12 @@ public class StudyGroupController {
                 .body(ApiResponse.ok(studyGroupService.createGroup(request, email)));
 
     }
+
+    @PostMapping("/join")
+    public ResponseEntity<ApiResponse<Void>> joinGroup(@AuthenticationPrincipal String email,
+        @Valid @RequestBody JoinGroupRequest request) {
+            studyGroupService.joinGroup(request, email);
+            return ResponseEntity.ok().body(ApiResponse.ok());
+        }
+
 }
