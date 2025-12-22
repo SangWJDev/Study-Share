@@ -9,11 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -29,18 +29,21 @@ public class StudyGroup extends BaseEntity {
     @Column(name = "invite_code", nullable = false, length = 12)
     private String inviteCode;
 
-    @Size(min = 1, max = 4)
     private int maxMembers;
 
+    @Setter
     private Long leaderId;
 
     @Builder
-    public StudyGroup(String name, int maxMembers, String inviteCode, Long leaderId) {
+    public StudyGroup(Long id, String name, int maxMembers, String inviteCode, Long leaderId) {
+        this.id = id;
         this.name = name;
         this.maxMembers = maxMembers;
         this.inviteCode = inviteCode;
         this.leaderId = leaderId;
     }
 
-    
+    public boolean checkLeader(Long id) {
+        return leaderId.equals(id);
+    }
 }

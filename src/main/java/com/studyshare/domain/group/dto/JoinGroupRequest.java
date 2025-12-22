@@ -1,7 +1,7 @@
-package com.studyshare.domain.user.dto;
+package com.studyshare.domain.group.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,13 +10,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class LoginRequest {
+public class JoinGroupRequest {
 
     @NotBlank
-    @Email
-    private String email;
-
-    @NotBlank
-    private String password;
+    @Size(max = 12)
+    private String invitedCode;
 
 }
